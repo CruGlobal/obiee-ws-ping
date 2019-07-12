@@ -1,0 +1,30 @@
+service: obiee-ws-ping
+
+frameworkVersion: ">=1.47.0"
+
+provider:
+  name: aws
+  runtime: provided
+  stage: dev
+  region: us-east-1
+
+custom:
+  type: ${opt:type, 'java'}
+
+package:
+  artifact: target/function-${self:custom.type}/obiee-ws-ping-1.0-SNAPSHOT.zip
+
+functions:
+  ping:
+    handler: Handler
+    timeout: 30
+    memorySize: 350
+    events:
+      - http:
+          method: post
+          path: ping
+    tags:
+      owner: blackops team
+      environment: production
+      comment: 'A helper for SOAP API synthetic transactions on OBIEE'
+      datadog-url: 'https://app.datadoghq.com/synthetics/details/s2q-hug-ght'

@@ -36,3 +36,7 @@ release.properties
 
 # a place to put temp files
 /work
+
+
+# serverless
+.serverless
