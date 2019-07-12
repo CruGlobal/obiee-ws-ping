@@ -104,6 +104,39 @@
           </systemProperties>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <configLocation>cru_checks.xml</configLocation>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+        </configuration>
+        <dependencies>
+          <!-- the maven plugin's version is too outdated -->
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>8.10.1</version>
+          </dependency>
+
+          <dependency>
+            <groupId>org.cru.style</groupId>
+            <artifactId>cru-java-style</artifactId>
+            <version>0-SNAPSHOT</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>enforce-style</id>
+            <phase>test</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
   <profiles>
