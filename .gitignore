@@ -33,3 +33,10 @@ pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 release.properties
+
+# a place to put temp files
+/work
+
+
+# serverless
+.serverless

@@ -1,9 +1,9 @@
-package org.cru.obieewsping.quickstart;
+package org.cru.obieewsping;
 
 import io.quarkus.test.junit.SubstrateTest;
 
 @SubstrateTest
-public class NativeGreetingResourceIT extends GreetingResourceTest {
+public class NativePingResourceIt extends PingResourceTest {
 
     // Execute the same tests but in native mode.
 }

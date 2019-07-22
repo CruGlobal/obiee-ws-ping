@@ -12,6 +12,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <cxf.version>3.3.2</cxf.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -29,6 +30,63 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-amazon-lambda</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-lambda-java-events</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ccci</groupId>
+      <artifactId>obiee-ws-client</artifactId>
+      <version>5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.xml.ws</groupId>
+      <artifactId>jaxws-api</artifactId>
+      <version>2.3.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.xml.ws</groupId>
+      <artifactId>jaxws-rt</artifactId>
+      <version>2.3.2</version>
+    </dependency>
+
+
+<!--    <dependency>-->
+<!--      <groupId>org.apache.cxf</groupId>-->
+<!--      <artifactId>cxf-core</artifactId>-->
+<!--      <version>${cxf.version}</version>-->
+<!--    </dependency>-->
+
+<!--    <dependency>-->
+<!--      <groupId>org.apache.cxf</groupId>-->
+<!--      <artifactId>cxf-rt-frontend-jaxws</artifactId>-->
+<!--      <version>${cxf.version}</version>-->
+<!--    </dependency>-->
+
+<!--    <dependency>-->
+<!--      <groupId>org.apache.cxf</groupId>-->
+<!--      <artifactId>cxf-rt-transports-http</artifactId>-->
+<!--      <version>${cxf.version}</version>-->
+<!--    </dependency>-->
+
+
+    <!-- for some reason, this is needed by the test but not at runtime -->
+    <dependency>
+      <groupId>javax.jws</groupId>
+      <artifactId>jsr181-api</artifactId>
+      <version>1.0-MR1</version>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
@@ -62,6 +120,102 @@
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
           </systemProperties>
         </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <configLocation>cru_checks.xml</configLocation>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+        </configuration>
+        <dependencies>
+          <!-- the maven plugin's version is too outdated -->
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>8.10.1</version>
+          </dependency>
+
+          <dependency>
+            <groupId>org.cru.style</groupId>
+            <artifactId>cru-java-style</artifactId>
+            <version>0-SNAPSHOT</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>enforce-style</id>
+            <phase>test</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.6</version>
+        <executions>
+          <execution>
+            <id>java-function</id>
+            <configuration>
+              <appendAssemblyId>false</appendAssemblyId>
+              <outputDirectory>${project.build.directory}/function-java</outputDirectory>
+              <descriptors>
+                <descriptor>src/main/assembly/function-java.xml</descriptor>
+              </descriptors>
+            </configuration>
+            <phase>package</phase> <!-- append to the packaging phase. -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>java-function-zip</id>
+            <configuration>
+              <appendAssemblyId>false</appendAssemblyId>
+              <outputDirectory>${project.build.directory}/function-java</outputDirectory>
+              <descriptors>
+                <descriptor>src/main/assembly/function-java-zip.xml</descriptor>
+              </descriptors>
+            </configuration>
+            <phase>package</phase> <!-- append to the packaging phase. -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>make-native-function</id>
+            <configuration>
+              <appendAssemblyId>false</appendAssemblyId>
+              <outputDirectory>${project.build.directory}/function-native</outputDirectory>
+              <descriptors>
+                <descriptor>src/main/assembly/function-native.xml</descriptor>
+              </descriptors>
+            </configuration>
+            <phase>package</phase> <!-- append to the packaging phase. -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>zip-native-function</id>
+            <configuration>
+              <appendAssemblyId>false</appendAssemblyId>
+              <outputDirectory>${project.build.directory}/function-native</outputDirectory>
+              <descriptors>
+                <descriptor>src/main/assembly/function-native-zip.xml</descriptor>
+              </descriptors>
+            </configuration>
+            <phase>package</phase> <!-- append to the packaging phase. -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
