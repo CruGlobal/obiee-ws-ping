@@ -3,7 +3,7 @@ package org.cru.obieewsping;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @RegisterForReflection
-public class PingRequest {
+public class PingRequestCredentials {
     private String username;
     private String password;
 
