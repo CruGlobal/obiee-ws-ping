@@ -5,7 +5,7 @@ frameworkVersion: ">=1.47.0"
 provider:
   name: aws
   runtime: provided
-  stage: dev
+  stage: prod
   region: us-east-1
 
 custom:
@@ -23,8 +23,10 @@ functions:
       - http:
           method: post
           path: ping
+    description: A simple lambda for OBIEE/Answers soap synthetic transaction testing
     tags:
+      application: obiee-ws-ping
       owner: blackops team
       environment: production
-      comment: 'A helper for SOAP API synthetic transactions on OBIEE'
+      comment: 'created by Serverless Framework; used by a DataDog API test for insightsso.cru.org'
       datadog-url: 'https://app.datadoghq.com/synthetics/details/s2q-hug-ght'
