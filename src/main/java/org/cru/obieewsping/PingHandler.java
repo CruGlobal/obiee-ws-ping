@@ -31,6 +31,9 @@ public class PingHandler implements RequestHandler<APIGatewayProxyRequestEvent, 
 
             service.performSyntheticTransaction(credentials.getUsername(), credentials.getPassword());
         } catch (Exception e) {
+            System.err.println("ping failed with exception:");
+            e.printStackTrace();
+
             return new APIGatewayProxyResponseEvent()
                 .withBody("not ok:" + e.toString())
                 .withStatusCode(500);
