@@ -28,5 +28,5 @@ functions:
       application: obiee-ws-ping
       owner: blackops team
       environment: production
-      comment: 'created by Serverless Framework; used by a DataDog API test for insightsso.cru.org'
+      comment: 'created by Serverless Framework and used by a DataDog API test for insightsso.cru.org'
       datadog-url: 'https://app.datadoghq.com/synthetics/details/s2q-hug-ght'
