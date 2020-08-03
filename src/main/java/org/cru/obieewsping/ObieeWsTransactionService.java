@@ -31,7 +31,7 @@ public class ObieeWsTransactionService {
 
     static {
         final String endpoint = System.getenv("ENDPOINT_BASE_URL");
-        ENDPOINT_BASE_URL = endpoint != null ? endpoint : "https://insightsso.cru.org";
+        ENDPOINT_BASE_URL = endpoint != null ? endpoint : "https://insight-sso.cru.org";
     }
 
     public ObieeWsTransactionService() {
